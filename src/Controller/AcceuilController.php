@@ -19,4 +19,5 @@ final class AcceuilController extends AbstractController{
     public function indexAction(): Response{
         return $this->render('Acceuil/index.html.twig');
     }
+    
 }
