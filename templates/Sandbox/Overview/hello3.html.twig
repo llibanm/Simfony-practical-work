@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Bienvenue !</title>
+
+
+    </head>
+    <body>
+
+        <h1>Bienvenue {{ prenom }}</h1>
+        <p>
+            Mes jeux préférés sont&nbsp;:
+            {% set i = 1 %}
+            {% for jeu in jeux %}
+                {{i}}:{{jeu}}
+                {% set i = i + 1 %}
+            {% else %}
+            Je ne préfére aucun jeu&nbsp;!
+            {% endfor %}
+        </p>
+    
+    
+    </body>
+
+
+
+
+</html>

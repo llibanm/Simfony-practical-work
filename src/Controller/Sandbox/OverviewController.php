@@ -25,13 +25,11 @@ final class OverviewController extends AbstractController{
     public function hello3Action(): Response
     {
         $args = array(
-            'prenom' => 'Gilles',
-            'jeux' => ['A Plague Tale : Innocence','WoW'],
+            'prenom' => 'Liban',
+            'jeux' => ['Monster Hunter 4 Ultimate','Arknights','Arknight:Endfield','wild Rift'],
 
         );
-
         return $this->render('Sandbox/Overview/hello3.html.twig',$args); 
-
     }
 
 }
