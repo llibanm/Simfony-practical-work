@@ -17,7 +17,7 @@ final class AcceuilController extends AbstractController{
 
     #[Route('/', name:'acceuil_index')]
     public function indexAction(): Response{
-        return $this->render('Acceuil/index.html.twig');
+        return $this->render('acceuil/index.html.twig');
     }
     
 }
