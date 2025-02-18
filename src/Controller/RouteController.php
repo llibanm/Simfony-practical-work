@@ -21,6 +21,8 @@ final class RouteController extends AbstractController
 
         return new Response('<body:>Route::with variable: age : '.$age.'</body>');
     }
+
+
     #[Route('/with-default/{age}'
     ,name:'_with_default',
     defaults:['age'=>18],
@@ -28,6 +30,17 @@ final class RouteController extends AbstractController
     public function withDefaultAction($age) : Response {
         dump($age);
         return new Response('<body>Route::with default: age : '.$age.'(' . gettype($age) . ')'.'</body>');
+    }
+
+
+    #[Route('/with-constraint/{age}',
+    name:'_with_constraint',
+    requirements:['age'=>'0|[1-9]\d*'],
+    defaults:['age'=>18],
+    )]  
+    public function withConstraintAction(int $age) : Response {
+        dump($age);
+        return new Response('<body>Route::with constraint: age : '.$age.'(' . gettype($age) . ')'.'</body>');
     }
 
 }
