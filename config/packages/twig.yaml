@@ -1,0 +1,9 @@
+twig:
+    file_name_pattern: '*.twig'
+    # variables globales pour Twig
+    globals:
+        palmares_size: 3
+
+when@test:
+    twig:
+        strict_variables: true
