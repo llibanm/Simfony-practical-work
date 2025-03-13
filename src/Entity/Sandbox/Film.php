@@ -3,7 +3,10 @@
 namespace App\Entity\Sandbox;
 
 use App\Repository\Sandbox\FilmRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Type;
+
 #[ORM\Table(name: 'sb_films')]
 #[ORM\Entity(repositoryClass: FilmRepository::class)]
 class Film
@@ -16,10 +19,10 @@ class Film
     #[ORM\Column(length: 200)]
     private ?string $titre = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options: ['comment'=>'année de sortie'])]
     private ?int $annee = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'enstock',type: Types::BOOLEAN, options:['default'=>true])]
     private ?bool $enstock = null;
 
     #[ORM\Column]
