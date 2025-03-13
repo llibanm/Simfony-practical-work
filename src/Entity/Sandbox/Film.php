@@ -4,7 +4,7 @@ namespace App\Entity\Sandbox;
 
 use App\Repository\Sandbox\FilmRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+#[ORM\Table(name: 'sb_films')]
 #[ORM\Entity(repositoryClass: FilmRepository::class)]
 class Film
 {
