@@ -29,9 +29,15 @@ class DoctrineController extends AbstractController
 name: '_view',
 requirements: ['id' => '[1-9]\d*'],
 )]
-public function viewAction(int $id) : Response
+public function viewAction(int $id,EntityManagerInterface $em) : Response
 {
-      $args = array();
+      $filmRepository = $em->getRepository(Film::class);
+      $film = $filmRepository->find($id);
+
+      $args = array(
+          "film" => $film,
+          "id" => $id,
+      );
       return  $this->render('Sandbox/Doctrine/view.html.twig', $args);
 }
 #[Route('/delete/{id}', name:'_delete',

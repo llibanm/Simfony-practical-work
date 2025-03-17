@@ -5,4 +5,21 @@
 {% block titre_principal %}Vue "view" : exercices Doctrine{% endblock %}
 
 {% block vue %}
+
+    <h2>Détails du film {{ id }}</h2>
+    {% if film is null %}
+        <p>Film n'existe pas</p>
+    {% else %}
+        <ul>
+            <li>id : {{ film.id }}</li>
+            <li>titre : {{ film.titre }}</li>
+            <li>année : {{ film.annee }}</li>
+            <li>en stock : {{ film.enstock ? 'oui' : 'non' }}</li>
+            <li>prix : {{ film.prix }} euro(s)</li>
+            <li>quantite : {{ film.quantite is null ? 'non renseigné' : film.quantite }}</li>
+        </ul>
+    {% endif %}
+
+    <h2>dump</h2>
+    {{ dump(film) }}
 {% endblock %}
