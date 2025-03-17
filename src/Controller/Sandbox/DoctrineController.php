@@ -56,17 +56,20 @@ public function ajouterendurAction(EntityManagerInterface $em):Response{
         return $this->redirectToRoute('sandbox_doctrine_view',['id'=>$film->getId()]);
 }
 
-#[Route('/modifierendur',name:'_modifierendur')]
-public function modifierendurAction(EntityManagerInterface $em,Film $film):Response{
+    #[Route('/modifierendur', name: '_modifierendur')]
+    public function modifierendurAction(EntityManagerInterface $em): Response
+    {
         $id = 2;
-        $filmRespository = $em->getRepository(Film::class);
-        $film = $filmRespository->find($id);
+        $filmRepository = $em->getRepository(Film::class);
+        $film = $filmRepository->find($id);
 
         $film
             ->setPrix(15.98)
-            ->setQuantite($film->getQuantite()+10);
+            ->setQuantite($film->getQuantite() + 10);
 
         $em->flush();
-        return $this->redirectToRoute('sandbox_doctrine_view',['id'=>$film->getId()]);
-}
+
+        return $this->redirectToRoute('sandbox_doctrine_view', ['id' => $film->getId()]);
+    }
+
 }
