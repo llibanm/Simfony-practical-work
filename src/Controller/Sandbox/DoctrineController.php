@@ -13,9 +13,14 @@ use Symfony\Component\HttpFoundation\Response;
 class DoctrineController extends AbstractController
 {
     #[Route('/list', name: '_list')]
-    public function listAction(): Response
+    public function listAction(EntityManagerInterface $em): Response
     {
-        $args = array();
+        $filmRepository = $em->getRepository(Film::class);
+        $films = $filmRepository->findAll();
+        $args = array(
+            "films" => $films
+        );
+
         return  $this->render('Sandbox/Doctrine/list.html.twig', $args);
     }
 
@@ -71,5 +76,19 @@ public function ajouterendurAction(EntityManagerInterface $em):Response{
 
         return $this->redirectToRoute('sandbox_doctrine_view', ['id' => $film->getId()]);
     }
+    #[Route('/effacerendur', name: '_effacerendur')]
+public function effacerendurAction(EntityManagerInterface $em): Response{
+
+        $id = 3;
+        $filmRepository = $em->getRepository(Film::class);
+        $film = $filmRepository->find($id);
+
+        $em->remove($film);
+        $em->flush();
+
+        return $this->redirectToRoute('sandbox_doctrine_list');
+
+    }
+
 
 }
