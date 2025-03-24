@@ -3,6 +3,8 @@
 namespace App\Entity\Sandbox;
 
 use App\Repository\Sandbox\FilmRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Type;
@@ -53,6 +55,12 @@ class Film
     #[ORM\Column(nullable: true)]
     private ?int $quantite = null;
 
+    /**
+     * @var Collection<int, Critique>
+     */
+    #[ORM\OneToMany(targetEntity: Critique::class, mappedBy: 'film')]
+    private Collection $critiques;
+
     /*
      * Film constructor
      */
@@ -61,6 +69,7 @@ class Film
     {
         $this->enstock = true;
         $this->quantite = null;
+        $this->critiques = new ArrayCollection();
 
     }
 
@@ -128,4 +137,35 @@ class Film
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Critique>
+     */
+    public function getCritiques(): Collection
+    {
+        return $this->critiques;
+    }
+
+    public function addCritique(Critique $critique): static
+    {
+        if (!$this->critiques->contains($critique)) {
+            $this->critiques->add($critique);
+            $critique->setFilm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCritique(Critique $critique): static
+    {
+        if ($this->critiques->removeElement($critique)) {
+            // set the owning side to null (unless already changed)
+            if ($critique->getFilm() === $this) {
+                $critique->setFilm(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
