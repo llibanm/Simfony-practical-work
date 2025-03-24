@@ -1,5 +1,5 @@
 <?php
-namespace APP\Controller\Sandbox;
+namespace App\Controller\Sandbox;
 
 use App\Entity\Sandbox\Film;
 use App\Form\Sandbox\FilmType;
