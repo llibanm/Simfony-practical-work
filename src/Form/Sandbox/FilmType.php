@@ -39,6 +39,7 @@ class FilmType extends AbstractType
             NumberType::class,
             [
                 'label' => 'Prix d\'achat',
+                'invalid message' => 'le prix n\'est pas un nombre',
             ])
             ->add('quantite',
             IntegerType::class,
