@@ -5,7 +5,6 @@ namespace App\Form\Sandbox;
 use App\Entity\Sandbox\Film;
 
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -37,7 +36,9 @@ class FilmType extends AbstractType
                 ])
             ->add('prix',
                 NumberType::class,     // déduit automatiquement par Symfony
-                ['label' => 'prix d\'achat'])
+                ['label' => 'prix d\'achat',
+                    'invalid_message' => 'le prix n\'est pas un nombre',
+                    ])
             ->add('quantite',
                 IntegerType::class,    // déduit automatiquement par Symfony
                 [

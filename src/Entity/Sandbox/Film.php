@@ -6,6 +6,7 @@ use App\Repository\Sandbox\FilmRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Type;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'sb_films')]
 #[ORM\Entity(repositoryClass: FilmRepository::class)]
@@ -17,15 +18,36 @@ class Film
     private ?int $id = null;
 
     #[ORM\Column(length: 200)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max: 200,
+        maxMessage: 'La taille du titre est trop grande , la limite est {{ limit }}',
+    )]
     private ?string $titre = null;
 
     #[ORM\Column(options: ['comment'=>'année de sortie'])]
+    #[Assert\Range(minMessage: 'Avant {{limit}} le cinema n\'existait pas',
+        min: 1850,
+    )]
+    #[Assert\Range(
+        maxMessage: '{{value}} est trop grande',
+        max: 2053,
+    )]
     private ?int $annee = null;
 
     #[ORM\Column(name: 'enstock',type: Types::BOOLEAN, options:['default'=>true])]
+    #[Assert\Type(
+        type: 'boolean',
+        message: '{{value}} n\'est pas de ce type',
+    )]
     private ?bool $enstock = null;
 
     #[ORM\Column]
+    #[Assert\Range(
+        notInRangeMessage: 'le prix doit être compris entre {{min}} et {{max}}',
+        min: 1,
+        max: 9999.999,
+    )]
     private ?float $prix = null;
 
     #[ORM\Column(nullable: true)]
