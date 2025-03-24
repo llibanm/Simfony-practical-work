@@ -3,13 +3,15 @@
 namespace App\Form\Sandbox;
 
 use App\Entity\Sandbox\Film;
-use Doctrine\DBAL\Types\IntegerType;
-use Doctrine\DBAL\Types\TextType;
-use PhpParser\Builder\Interface_;
+
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FilmType extends AbstractType
@@ -18,37 +20,33 @@ class FilmType extends AbstractType
     {
         $builder
             ->add('titre',
-            TextType::class,
-            [
-                'label' => 'Titre du film',
-                'attr' => ['placeholder' => 'Titre '],
-            ])
+                TextType::class,       // déduit automatiquement par Symfony
+                [
+                    'label' => 'titre du film',
+                    'attr' => ['placeholder' => 'titre'],
+                ])
             ->add('annee',
-            IntegerType::class,
-            [
-                'label' => 'année de sortie',
-            ])
+                IntegerType::class,    // déduit automatiquement par Symfony
+                ['label' => 'année de sortie'])
             ->add('enstock',
-            ChoiceType::class,
-            [
-                'label' => 'Enstock',
-                'choices' => ['oui'=>true,'non'=>false],
-                'expanded' => true,
-            ])
+                ChoiceType::class,     // par défaut c'est CheckboxType
+                [
+                    'label' => 'en stock',
+                    'choices' => ['oui' => true, 'non' => false],     // liste des choix : labels et valeurs
+                    'expanded' => true,                               // liste déroulante ou radio-boutons
+                ])
             ->add('prix',
-            NumberType::class,
-            [
-                'label' => 'Prix d\'achat',
-                'invalid message' => 'le prix n\'est pas un nombre',
-            ])
+                NumberType::class,     // déduit automatiquement par Symfony
+                ['label' => 'prix d\'achat'])
             ->add('quantite',
-            IntegerType::class,
-            [
-                'label' => 'quanité en stock',
-                'help' => '0 si "enstock" est à "non"',
-            ])
+                IntegerType::class,    // déduit automatiquement par Symfony
+                [
+                    'label' => 'quantité en stock',
+                    'help' => '0 si "enstock" est à "non"',           // message d'aide lié au champ
+                ])
         ;
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
