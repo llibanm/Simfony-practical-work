@@ -6,12 +6,15 @@ use App\Form\Sandbox\FilmType;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\MakerBundle\Validator;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 #[Route('/sandbox/form',name:'sandbox_form')]
 class FormController extends AbstractController{
 
@@ -72,5 +75,21 @@ class FormController extends AbstractController{
         );
         return $this->render('Sandbox/Form/film_editbis.html.twig', $args);
     }
+    #[Route('/film/validator',name:'_film_validator')]
+    public function filmValidatorAction(ValidatorInterface $validator):Response
+    {
+        $film = new Film();
+        $film
+            ->setTitre(str_repeat('abc',100))
+            ->setAnnee(1894)
+            ->setEnstock(true)
+            ->setPrix(0.99)
+            ->setQuantite(-15)
+            ;
+        dump($validator->validate($film));
+        return new Response('<body>cf.dump</body>');
+    }
+
+
 
 }

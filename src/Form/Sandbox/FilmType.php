@@ -43,6 +43,7 @@ class FilmType extends AbstractType
                 IntegerType::class,    // déduit automatiquement par Symfony
                 [
                     'label' => 'quantité en stock',
+                    'required' => false,
                     'help' => '0 si "enstock" est à "non"',           // message d'aide lié au champ
                 ])
         ;

@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Table(name: 'sb_films')]
 #[ORM\Entity(repositoryClass: FilmRepository::class)]
@@ -53,12 +54,17 @@ class Film
     private ?float $prix = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(
+        minMessage: 'pas de stock négatif',
+        min: 0,
+    )]
     private ?int $quantite = null;
 
     /**
      * @var Collection<int, Critique>
      */
     #[ORM\OneToMany(targetEntity: Critique::class, mappedBy: 'film')]
+    #[Assert\Valid]
     private Collection $critiques;
 
     /*
@@ -166,6 +172,21 @@ class Film
         }
 
         return $this;
+    }
+
+    public function verifStock(ExecutionContextInterface $context):void
+    {
+        if(
+            ( ($this->enstock ===false)&&(is_null($this->quantite))||($this->quantite>0))
+                                        ||
+            ( ($this->enstock===true)&&(!is_null($this->quantite))||($this->quantite<=0))
+        )
+        {
+            $context
+                ->buildViolation('incohérence entre quantite et enstock')
+                ->atPath('quantite')
+                ->addViolation();
+        }
     }
 
 }
