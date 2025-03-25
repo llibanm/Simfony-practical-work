@@ -3,6 +3,7 @@
 namespace App\Controller\Sandbox;
 
 
+use App\Entity\Sandbox\Critique;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Sandbox\Film;
@@ -95,6 +96,7 @@ public function effacerendurAction(EntityManagerInterface $em): Response{
         return $this->redirectToRoute('sandbox_doctrine_list');
 
     }
+
 
 
 }
